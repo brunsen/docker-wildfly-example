@@ -1,0 +1,25 @@
+version: "3.7"
+services:
+  
+  mariadb:
+    container_name: mariadb
+    image: mariadb:10.5.1-bionic
+    environment:
+      # Don't be confused, mariadb is compatible to mysql and shares cmds
+      MYSQL_ROOT_PASSWORD: mariaPW
+      TZ: UTC
+    command: mysqld --lower_case_table_names=1 --character-set-server=utf8mb4
+    volumes:
+      - ./mariadb/init_scripts:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    restart: on-failure
+
+  wildfly:
+    depends_on:
+      - mariadb
+    container_name: wildfly-dev
+    build: ./wildfly-docker
+    ports:
+      - "8080:8080"
+      - "9990:9990"

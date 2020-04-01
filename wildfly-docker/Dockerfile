@@ -1,0 +1,21 @@
+FROM jboss/wildfly:18.0.1.Final
+USER root
+# Add cli scripts to image
+ADD cli /opt/jboss/wildfly/standalone/configuration/cli
+ADD scripts /usr/local/bin
+RUN chmod -v a+x /usr/local/bin/*
+# Change back to jboss user since the following operatios require less permissions
+USER jboss
+# Create tempprary directory to copy for example module specifications
+RUN mkdir tmp
+ADD --chown=jboss:jboss modules tmp/modules
+# Exceute module dowloader script
+RUN module-downloader.sh
+# Execute script to process cli files with jboss-cli
+RUN read_cli.sh
+# Remove temporary directory. It's no longer required at this point
+RUN rm -rf tmp
+# Add at least admin user to get acces to wildfly console. Could be changed to another user
+RUN /opt/jboss/wildfly/bin/add-user.sh admin nimda --silent
+EXPOSE 9990
+ENTRYPOINT ["/opt/jboss/wildfly/bin/standalone.sh", "-b", "0.0.0.0", "-bmanagement", "0.0.0.0"]

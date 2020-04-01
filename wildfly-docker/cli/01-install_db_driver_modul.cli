@@ -1,0 +1,5 @@
+embed-server --server-config=standalone.xml --std-out=echo
+
+module add --name=org.mariadb \
+--resources=~/tmp/modules/org/mariadb/jdbc/mariadb-java-client.jar \
+--dependencies=javax.api,javax.transaction.api

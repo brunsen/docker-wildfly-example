@@ -1,0 +1,12 @@
+embed-server --server-config=standalone.xml --std-out=echo
+
+/subsystem=datasources/data-source=heroesDS/:add(\
+connection-url=jdbc:mariadb://mariadb:3306/herodb,\
+user-name=hero,\
+password=heropw,\
+driver-name=mariadb,\
+jndi-name=java:/jdbc/heroesDS,\
+background-validation=true,\
+background-validation-millis=60000,\
+blocking-timeout-wait-millis=2000,\
+flush-strategy=Gracefully,idle-timeout-minutes=5,initial-pool-size=4,max-pool-size=64,min-pool-size=4,query-timeout=10,track-statements=true,tracking=true,validate-on-match=false)
