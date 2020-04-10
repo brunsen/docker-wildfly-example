@@ -1,2 +1,4 @@
 # Mac OS related
 **/*.DS_Store
+# README files
+**/*README.md

@@ -1,5 +1,6 @@
 #!/bin/bash
-FILES=/opt/jboss/wildfly/standalone/configuration/cli/*
+# Fetch a list of all .cli files that were placed in the configuration/cli folder
+FILES=/opt/jboss/wildfly/standalone/configuration/cli/*.cli
 for cliFile in $FILES
 do
   # Check if file exists
