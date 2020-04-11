@@ -3,11 +3,9 @@ input="$HOME/tmp/modules/module-specification"
 # Iterate over each line of the file
 while IFS="" read -r line || [ -n "$line" ]
 do
-  set -f
   # Split the line by double colon and store result in array
   IFS=":"
-  lineArray=($line)
-  # Print each entry in array
+  read -ra lineArray <<< "$line"
   # Detect required folder name
   folder="${lineArray[0]}"
   # Replace . with /
@@ -20,15 +18,18 @@ do
     mkdir -p "$outputFolder"
   fi
   # Parse module information
-  module=${lineArray[1]}
+  group=${lineArray[0]}
+  artifact=${lineArray[1]}
   version=${lineArray[2]}
   fileType=${lineArray[3]}
   # Define input and outputfile
-  fileName="$module-$version.$fileType"
-  outputFile="$outputFolder/$module.$fileType"
-
-  # Download module from mavencentral using curl
-  curl "https://repo1.maven.org/maven2/$folder/$module/$version/$fileName" --output "$outputFile"
+  outputFile="$outputFolder/$artifact.$fileType"
+  # Call maven downloader to actually download the artifact
+  maven-downloader.sh -g $group -a $artifact -v $version -t $fileType # -o $outputFile
+  # Exit in case the maven downloader encountered any errors
+  if [ $? -eq 1 ]; then
+   exit 1
+  fi
 
 done < "$input"
 echo "Module download completed"
