@@ -25,7 +25,7 @@ do
   # Define input and outputfile
   outputFile="$outputFolder/$artifact.$fileType"
   # Call maven downloader to actually download the artifact
-  maven-downloader.sh -g $group -a $artifact -v $version -t $fileType # -o $outputFile
+  maven-downloader.sh -g $group -a $artifact -v $version -t $fileType -o $outputFile
   # Exit in case the maven downloader encountered any errors
   if [ $? -eq 1 ]; then
    exit 1
