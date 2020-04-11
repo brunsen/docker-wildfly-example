@@ -22,7 +22,7 @@ do
   artifact=${lineArray[1]}
   version=${lineArray[2]}
   fileType=${lineArray[3]}
-  # Define input and outputfile
+  # Define outputfile
   outputFile="$outputFolder/$artifact.$fileType"
   # Call maven downloader to actually download the artifact
   maven-downloader.sh -g $group -a $artifact -v $version -t $fileType -o $outputFile
