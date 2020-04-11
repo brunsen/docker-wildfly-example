@@ -8,5 +8,9 @@ do
     echo "Executing $cliFile ..."
     # Execute each file with Jboss CLI
     /opt/jboss/wildfly/bin/jboss-cli.sh --file=$cliFile
+    # Exit in case the jboss cli encountered any errors
+    if [ $? -eq 1 ]; then
+      exit 1
+    fi
   fi
 done
