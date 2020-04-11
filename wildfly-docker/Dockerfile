@@ -9,10 +9,13 @@ USER jboss
 # Create tempprary directory to copy for example module specifications
 RUN mkdir tmp
 ADD --chown=jboss:jboss modules tmp/modules
-# Exceute module dowloader script
+ADD --chown=jboss:jboss deployments tmp/deployments
+# Execute module dowloader script
 RUN module-downloader.sh
 # Execute script to process cli files with jboss-cli
 RUN read_cli.sh
+# Execute deployment dowloader script
+RUN deployment-downloader.sh
 # Remove temporary directory. It's no longer required at this point
 RUN rm -rf tmp
 # Add at least admin user to get acces to wildfly console. Could be changed to another user
