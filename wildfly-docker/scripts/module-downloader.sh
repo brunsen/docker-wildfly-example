@@ -12,7 +12,7 @@ do
   folder=${folder//"."/"/"}
   outputFolder="$HOME/tmp/modules/$folder"
   if [[ ! -d "$outputFolder" ]]
-    then
+  then
     echo "$outputFolder does not exist on your filesystem. Will create folder now."
     # Create folder including parent folders
     mkdir -p "$outputFolder"
@@ -27,8 +27,12 @@ do
   # Call maven downloader to actually download the artifact
   maven-downloader.sh -g $group -a $artifact -v $version -t $fileType -o $outputFile
   # Exit in case the maven downloader encountered any errors
-  if [ $? -eq 1 ]; then
-   exit 1
+  if [ $? -eq 1 ] 
+  then
+    echo "Failed to download $group:$artifact:$version:$fileType from maven"
+    exit 1
+  else
+    echo "Successfully downloaded $group:$artifact:$version:$fileType stored in $outputFile"
   fi
 
 done < "$input"
