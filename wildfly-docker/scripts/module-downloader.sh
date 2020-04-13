@@ -1,5 +1,7 @@
 #!/bin/bash
 input="$HOME/tmp/modules/module-specification"
+touch "$HOME/tmp/modules/modules.properties"
+propertiesFile="$HOME/tmp/modules/modules.properties"
 # Iterate over each line of the file
 while IFS="" read -r line || [ -n "$line" ]
 do
@@ -23,7 +25,7 @@ do
   version=${lineArray[2]}
   fileType=${lineArray[3]}
   # Define outputfile
-  outputFile="$outputFolder/$artifact.$fileType"
+  outputFile="$outputFolder/$artifact-$version.$fileType"
   # Call maven downloader to actually download the artifact
   maven-downloader.sh -g $group -a $artifact -v $version -t $fileType -o $outputFile
   # Exit in case the maven downloader encountered any errors
@@ -33,9 +35,8 @@ do
     exit 1
   else
     echo "Successfully downloaded $group:$artifact:$version:$fileType stored in $outputFile"
+    echo -e "$group.$artifact.location=$outputFile" >> $propertiesFile
   fi
 
 done < "$input"
 echo "Module download completed"
-# Copy specification file to different folder in case used module versions need to be looked up.
-cp $HOME/tmp/modules/module-specification /opt/jboss/wildfly/standalone/configuration/downloaded-modules

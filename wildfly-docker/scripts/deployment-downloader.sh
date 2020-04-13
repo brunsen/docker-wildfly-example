@@ -23,7 +23,4 @@ do
   fi
 
 done < "$input"
-echo "Deployment download completed"
-# TODO Keep downloaded specification somewhere
-# Copy deployment file to different folder in case used module versions need to be looked up.
-cp $HOME/tmp/deployments/deployment-list /opt/jboss/wildfly/standalone/configuration/downloaded-deployments
+echo "Deployments download completed"
