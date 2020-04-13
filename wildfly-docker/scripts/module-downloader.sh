@@ -39,4 +39,4 @@ do
   fi
 
 done < "$input"
-echo "Module download completed"
+echo "Modules download completed"
