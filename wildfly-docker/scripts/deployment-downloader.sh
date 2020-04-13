@@ -18,7 +18,8 @@ do
   
   # Exit in case the maven downloader encountered any errors
   if [ $? -eq 1 ]; then
-   exit 1
+    echo "Failed to download $group:$artifact:$version:$fileType from maven"
+    exit 1
   fi
 
 done < "$input"
