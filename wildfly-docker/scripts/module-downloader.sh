@@ -37,3 +37,5 @@ do
 
 done < "$input"
 echo "Module download completed"
+# Copy specification file to different folder in case used module versions need to be looked up.
+cp $HOME/tmp/modules/module-specification /opt/jboss/wildfly/standalone/configuration/downloaded-modules
