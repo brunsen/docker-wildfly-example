@@ -1,7 +1,10 @@
 embed-server --server-config=standalone.xml --std-out=echo
 
+set database_host=${DATABASE_HOST}
+set database_port=${DATABASE_PORT}
+
 /subsystem=datasources/data-source=heroesDS/:add(\
-connection-url=jdbc:mariadb://mariadb:3306/herodb,\
+connection-url=jdbc:mariadb://$database_host:$database_port/herodb,\
 user-name=hero,\
 password=heropw,\
 driver-name=mariadb,\

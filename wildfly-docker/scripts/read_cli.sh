@@ -7,7 +7,7 @@ do
   if [ -f "$cliFile" ]; then
     echo "Executing $cliFile ..."
     # Execute each file with Jboss CLI
-    /opt/jboss/wildfly/bin/jboss-cli.sh --file=$cliFile --properties=$HOME/tmp/modules/modules.properties
+    /opt/jboss/wildfly/bin/jboss-cli.sh --file=$cliFile --properties=$HOME/tmp/modules/modules.properties --properties=$HOME/tmp/wildfly.properties
     # Exit in case the jboss cli encountered any errors
     if [ $? -eq 1 ]; then
       exit 1

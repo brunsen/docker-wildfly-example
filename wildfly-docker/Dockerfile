@@ -10,11 +10,12 @@ USER jboss
 RUN mkdir tmp
 ADD --chown=jboss:jboss modules tmp/modules
 ADD --chown=jboss:jboss deployments tmp/deployments
-# Execute module dowloader script
+ADD --chown=jboss:jboss wildfly.properties tmp/.
+# Execute module downloader script
 RUN module-downloader.sh
 # Execute script to process cli files with jboss-cli
 RUN read_cli.sh
-# Execute deployment dowloader script
+# Execute deployment downloader script
 RUN deployment-downloader.sh
 # Remove temporary directory. It's no longer required at this point
 RUN rm -rf tmp
