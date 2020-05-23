@@ -6,13 +6,15 @@ ADD scripts /usr/local/bin
 RUN chmod -v a+x /usr/local/bin/*
 # Change back to jboss user since the following operatios require less permissions
 USER jboss
-# Create tempprary directory to copy for example module specifications
+# Create temporary directory to copy for example module specifications
 RUN mkdir tmp
 ADD --chown=jboss:jboss modules tmp/modules
 ADD --chown=jboss:jboss deployments tmp/deployments
 ADD --chown=jboss:jboss wildfly.properties tmp/.
 # Execute module downloader script
 RUN module-downloader.sh
+# Install keycloak adapter module
+RUN prepare-keycloak-modules.sh
 # Execute script to process cli files with jboss-cli
 RUN read_cli.sh
 # Execute deployment downloader script

@@ -18,8 +18,20 @@ services:
   wildfly:
     depends_on:
       - mariadb
-    container_name: wildfly-dev
+    container_name: wildfly
     build: ./wildfly-docker
     ports:
       - "8080:8080"
       - "9990:9990"
+  
+  keycloak:
+    container_name: keycloak-server
+    image: 'jboss/keycloak:10.0.1'
+    environment:
+      - DB_VENDOR=h2 # DB_Vendor must be set to avoid startup crashes in this case
+      - KEYCLOAK_PASSWORD=nimda
+      - KEYCLOAK_USER=admin
+    ports:
+      # Use a different default port than wildfly
+      - "8180:8080"
+      - "8443:8443"
