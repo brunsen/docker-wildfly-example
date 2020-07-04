@@ -10,7 +10,6 @@ USER jboss
 RUN mkdir tmp
 ADD --chown=jboss:jboss modules tmp/modules
 ADD --chown=jboss:jboss deployments tmp/deployments
-ADD --chown=jboss:jboss wildfly.properties tmp/.
 # Execute module downloader script
 RUN module-downloader.sh
 # Install keycloak adapter module
