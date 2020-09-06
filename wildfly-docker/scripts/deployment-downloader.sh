@@ -14,7 +14,7 @@ do
   # Define outputfile
   outputFile="opt/jboss/wildfly/standalone/deployments/$artifact-$version.$fileType"
   # Call maven downloader to actually download the artifact
-  maven-downloader.sh -g $group -a $artifact -v $version -t $fileType -o $outputFile
+  maven-downloader.sh -g $group -a $artifact -v $version -p $fileType -o $outputFile
   
   # Exit in case the maven downloader encountered any errors
   if [ $? -eq 1 ]; then

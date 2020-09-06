@@ -1,5 +1,5 @@
 #!/bin/bash
-while getopts "g:a:v:t:o:" opt;
+while getopts "g:a:v:p:o:" opt;
 do
     case ${opt} in
     g) 
@@ -11,8 +11,8 @@ do
     v)
         VERSION=$OPTARG
         ;;
-    t)
-        TYPE=$OPTARG # Type can be jar, war or ear
+    p)
+        PACKAGE=$OPTARG # Package can be either jar, war, ear or zip
         ;;
     o)
         OUTPUT=$OPTARG
@@ -42,9 +42,9 @@ if [ -z ${VERSION+x} ]
 fi
 
 # Guard to prevent empty Type definition
-if [ -z ${TYPE+x} ]
+if [ -z ${PACKAGE+x} ]
     then
-    echo "Type was not provided!"
+    echo "Package was not provided!"
     exit 1
 fi
 
@@ -57,7 +57,7 @@ fi
 
 REPOSITORY_URL="https://repo1.maven.org/maven2"
 GROUP_PATH=${GROUP//"."/"/"}
-FILE_NAME="$ARTIFACT-$VERSION.$TYPE"
+FILE_NAME="$ARTIFACT-$VERSION.$PACKAGE"
 
 # Check if version is a snaphsot release. 
 # Those are sometimes stored in different repositories
@@ -67,5 +67,5 @@ if [[ $VERSION == *"-SNAPSHOT"* ]]; then
 fi
 
 # Download maven artifact from mavencentral using curl
-echo "Downloading $GROUP:$ARTIFACT:$VERSION:$TYPE from $REPOSITORY_URL"
-curl "$REPOSITORY_URL/$GROUP_PATH/$ARTIFACT/$VERSION/$FILE_NAME" --output "$OUTPUT"
+echo "Downloading $GROUP:$ARTIFACT:$VERSION:$PACKAGE from $REPOSITORY_URL"
+curl --fail -s "$REPOSITORY_URL/$GROUP_PATH/$ARTIFACT/$VERSION/$FILE_NAME" --output "$OUTPUT"
