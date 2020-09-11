@@ -12,6 +12,7 @@ do
     if [ $? -eq 1 ]; then
       exit 1
     fi
+    echo "Successfully executed $cliFile"
     # Remove any entry to standalone xml history directory to avoid errors with this next line.
     # The standalone xml history is not relevant during the initial build.
     remove-standalone-xml-history.sh

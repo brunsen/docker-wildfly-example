@@ -12,13 +12,14 @@ ADD --chown=jboss:jboss modules tmp/modules
 ADD --chown=jboss:jboss deployments tmp/deployments
 # Execute module downloader script
 RUN module-downloader.sh
-# Install keycloak adapter module
-RUN prepare-keycloak-modules.sh
 # Execute script to process cli files with jboss-cli
 RUN read_cli.sh
 # Configure datasources
 ADD --chown=jboss:jboss datasources /opt/jboss/wildfly/standalone/configuration/datasources
 RUN configure-datasources.sh
+# Install keycloak adapter
+ADD --chown=jboss:jboss keycloak /opt/jboss/wildfly/standalone/configuration/keycloak
+RUN install-keycloak-adapter.sh
 # Execute deployment downloader script
 RUN deployment-downloader.sh
 # Remove temporary directory. It's no longer required at this point
