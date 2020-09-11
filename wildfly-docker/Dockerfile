@@ -16,6 +16,9 @@ RUN module-downloader.sh
 RUN prepare-keycloak-modules.sh
 # Execute script to process cli files with jboss-cli
 RUN read_cli.sh
+# Configure datasources
+ADD --chown=jboss:jboss datasources /opt/jboss/wildfly/standalone/configuration/datasources
+RUN configure-datasources.sh
 # Execute deployment downloader script
 RUN deployment-downloader.sh
 # Remove temporary directory. It's no longer required at this point

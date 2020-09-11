@@ -1,0 +1,28 @@
+embed-server --server-config=standalone.xml --std-out=echo
+
+set datasource_name=${datasource.name}
+set connection_url=${cdatasource.connection.url}
+set user_name=${datasource.user.name}
+set user_pw=${datasource.user.password}
+set driver=${datasource.driver}
+
+# TODO: Extract more and set defaults
+
+/subsystem=datasources/data-source=$datasource_name/:add(\
+connection-url=$connection_url, \
+user-name=$user_name,\
+password=$user_pw,\
+driver-name=$driver,\
+jndi-name=java:/jdbc/$datasource_name,\
+background-validation=true,\
+background-validation-millis=60000,\
+blocking-timeout-wait-millis=2000,\
+flush-strategy=Gracefully,\
+idle-timeout-minutes=5\
+,initial-pool-size=4\
+,max-pool-size=64\
+,min-pool-size=4\
+,query-timeout=10\
+,track-statements=true\
+,tracking=true\
+,validate-on-match=false)
