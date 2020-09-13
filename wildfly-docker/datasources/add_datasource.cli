@@ -5,24 +5,96 @@ set connection_url=${cdatasource.connection.url}
 set user_name=${datasource.user.name}
 set user_pw=${datasource.user.password}
 set driver=${datasource.driver}
+set background_validation=${datasource.background.validation}
+set background_validation_millis=${datasource.background.validation.millis}
+set blocking_timeout_wait_millis=${datasource.blocking.timeout.wait.millis}
+set flush_strategy=${datasource.flush.strategy}
+set idle_timeout_minutes=${datasource.idle.timeout.minutes}
+set initial_pool_size=${datasource.initial.pool.size}
+set max_pool_size=${datasource.max.pool.size}
+set min_pool_size=${datasource.min.pool.size}
+set query_timeout=${datasource.query.timeout}
+set track_statements=${datasource.track.statements}
+set tracking=${datasource.tracking}
+set validate_on_match=${datasource.validate.on.match}
 
-# TODO: Extract more and set defaults
+# Check optional values and set defaults if optional values were not set
+if (outcome == failed) of :resolve-expression(expression=$background_validation)
+    echo datasource.background.validation is not set. will use default value
+    set background_validation=true
+end-if
 
+if (outcome == failed) of :resolve-expression(expression=$background_validation_millis)
+    echo datasource.background.validation.millis is not set. will use default value
+    set background_validation_millis=60000
+end-if
+
+if (outcome == failed) of :resolve-expression(expression=$blocking_timeout_wait_millis)
+    echo datasource.blocking.timeout.wait.millis is not set. will use default value
+    set blocking_timeout_wait_millis=2000
+end-if
+
+if (outcome == failed) of :resolve-expression(expression=$flush_strategy)
+    echo datasource.flush.strategy is not set. will use default value
+    set flush_strategy=Gracefully
+end-if
+
+if (outcome == failed) of :resolve-expression(expression=$idle_timeout_minutes)
+    echo datasource.idle.timeout.minutes is not set. will use default value
+    set idle_timeout_minutes=5
+end-if
+
+if (outcome == failed) of :resolve-expression(expression=$initial_pool_size)
+    echo datasource.initial.pool.size is not set. will use default value
+    set initial_pool_size=4
+end-if
+
+if (outcome == failed) of :resolve-expression(expression=$max_pool_size)
+    echo datasource.max.pool.size is not set. will use default value
+    set max_pool_size=64
+end-if
+
+if (outcome == failed) of :resolve-expression(expression=$min_pool_size)
+    echo datasource.min.pool.size is not set. will use default value
+    set min_pool_size=44
+end-if
+
+if (outcome == failed) of :resolve-expression(expression=$query_timeout)
+    echo datasource.query.timeout is not set. will use default value
+    set query_timeout=10
+end-if
+
+if (outcome == failed) of :resolve-expression(expression=$track_statements)
+    echo datasource.track.statements is not set. will use default value
+    set track_statements=true
+end-if
+
+if (outcome == failed) of :resolve-expression(expression=$tracking)
+    echo datasource.tracking is not set. will use default value
+    set tracking=true
+end-if
+
+if (outcome == failed) of :resolve-expression(expression=$validate_on_match)
+    echo datasource.validate.on.match is not set. will use default value
+    set validate_on_match=false
+end-if
+
+# This is where the datasource is actually configured
 /subsystem=datasources/data-source=$datasource_name/:add(\
 connection-url=$connection_url, \
 user-name=$user_name,\
 password=$user_pw,\
 driver-name=$driver,\
 jndi-name=java:/jdbc/$datasource_name,\
-background-validation=true,\
-background-validation-millis=60000,\
-blocking-timeout-wait-millis=2000,\
-flush-strategy=Gracefully,\
-idle-timeout-minutes=5\
-,initial-pool-size=4\
-,max-pool-size=64\
-,min-pool-size=4\
-,query-timeout=10\
-,track-statements=true\
-,tracking=true\
-,validate-on-match=false)
+background-validation=$background_validation,\
+background-validation-millis=$background_validation_millis,\
+blocking-timeout-wait-millis=$blocking_timeout_wait_millis,\
+flush-strategy=$flush_strategy,\
+idle-timeout-minutes=$idle_timeout_minutes\
+,initial-pool-size=$initial_pool_size\
+,max-pool-size=$max_pool_size\
+,min-pool-size=$min_pool_size\
+,query-timeout=$query_timeout\
+,track-statements=$track_statements\
+,tracking=$tracking\
+,validate-on-match=$validate_on_match)
