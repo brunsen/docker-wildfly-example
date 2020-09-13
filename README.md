@@ -6,4 +6,4 @@ To run this project open any console, navigate to the docker-compose file and ty
 
 After running the docker-compose.yaml you will find a mariadb database fully setup and a wildfly application server that is able to connect to the database.
 
-For further instuctions on how to adapt this project to your needs refer to the READ.me files in the subfolders of this project.
+For further instuctions on how to adapt this project to your needs refer to the README.md files in the subfolders of this project.
