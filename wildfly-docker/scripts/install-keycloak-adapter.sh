@@ -12,7 +12,7 @@ if [ -n "$(find $HOME/tmp/modules/org -name 'keycloak-wildfly-adapter-dist-*.zip
         # Unzip keycloak adapter zip and copy modules from zip to $HOME/wildfly/modules/org/
         unzip -q $HOME/tmp/modules/org/keycloak/keycloak-wildfly-adapter-dist-*.zip -d $HOME/tmp/modules/org/keycloak
         mkdir -p $HOME/wildfly/modules/system/layers/base/org/keycloak
-        cp -R $HOME/tmp/modules/org/keycloak/modules/system/add-ons/keycloak/org/ $HOME/wildfly/modules/org/
+        cp -R $HOME/tmp/modules/org/keycloak/modules/system/add-ons/keycloak/org/keycloak/ $HOME/wildfly/modules/org/
         
         # Install each cli script from keycloak folder
         CLI_FILES=/opt/jboss/wildfly/standalone/configuration/keycloak/*.cli
@@ -20,7 +20,7 @@ if [ -n "$(find $HOME/tmp/modules/org -name 'keycloak-wildfly-adapter-dist-*.zip
         do
             echo "Executing $cliFile ..."
             # Execute each file with Jboss CLI
-            /opt/jboss/wildfly/bin/jboss-cli.sh --file=$cliFile --properties=$HOME/tmp/modules/modules.properties
+            /opt/jboss/wildfly/bin/jboss-cli.sh --file=$cliFile
             # Exit in case the jboss cli encountered any errors
             if [ $? -eq 1 ]; then
             exit 1
