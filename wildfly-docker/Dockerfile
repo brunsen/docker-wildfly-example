@@ -1,4 +1,4 @@
-FROM jboss/wildfly:20.0.1.Final
+FROM jboss/wildfly:21.0.0.Final
 USER root
 # Add cli scripts to image
 ADD cli /opt/jboss/wildfly/standalone/configuration/cli

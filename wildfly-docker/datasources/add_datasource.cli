@@ -1,7 +1,7 @@
 embed-server --server-config=standalone.xml --std-out=echo
 
 set datasource_name=${datasource.name}
-set connection_url=${cdatasource.connection.url}
+set connection_url=${datasource.connection.url}
 set user_name=${datasource.user.name}
 set user_pw=${datasource.user.password}
 set driver=${datasource.driver}
