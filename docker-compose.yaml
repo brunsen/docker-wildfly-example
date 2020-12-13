@@ -3,7 +3,7 @@ services:
   
   mariadb:
     container_name: mariadb
-    image: mariadb:10.5.1-bionic
+    image: mariadb:10.5.8-focal
     environment:
       # Don't be confused, mariadb is compatible to mysql and shares cmds
       MYSQL_ROOT_PASSWORD: mariaPW
