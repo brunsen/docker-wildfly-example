@@ -23,7 +23,7 @@ if [ -n "$(find $HOME/tmp/modules/org -name 'keycloak-wildfly-adapter-dist-*.zip
             /opt/jboss/wildfly/bin/jboss-cli.sh --file=$cliFile
             # Exit in case the jboss cli encountered any errors
             if [ $? -eq 1 ]; then
-            exit 1
+                exit 1
             fi
             echo "Successfully executed $cliFile"
             # Remove any entry to standalone xml history directory to avoid errors with this next line.
@@ -33,5 +33,3 @@ if [ -n "$(find $HOME/tmp/modules/org -name 'keycloak-wildfly-adapter-dist-*.zip
     else
         echo "Keycloak adapter zip does not exist on disk."
 fi
-
-# TODO: Run keycloak cli file "keycloak-adapter-install-offline.cli"
