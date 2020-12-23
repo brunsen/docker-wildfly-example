@@ -1,2 +1,2 @@
 org.mariadb.jdbc:mariadb-java-client:2.6.0:jar
-org.keycloak:keycloak-wildfly-adapter-dist:10.0.2:zip
+org.keycloak:keycloak-wildfly-adapter-dist:12.0.1:zip
